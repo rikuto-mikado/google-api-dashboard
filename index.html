@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Google API Dashboard</h1>
+            <div id="auth-container">
+                <div id="login-section">
+                    <button id="signin-button" class="btn btn-primary">Login with Google</button>
+                </div>
+                <div id="user-section" style="display:none;">
+                    <span id="user-name">User</span>
+                    <button id="signout-button" class="btn btn-secondary">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="welcome-message" class="welcome">
+            <h2>Welcome to Google API Dashboard!</h2>
+            <p>Log in with your Google account and try accessing various services</p>
+        </div>
+
+        <div id="loading" class="loading" style="display:none;">
+            <div class="spinner"></div>
+            <p>Connecting to Google API...</p>
+        </div>
+
+        <div id="dashboard" class="dashboard" style="display:none;">
+            <!-- Gmail section -->
+            <section id="gmail-section" class="api-section">
+                <div class="section-header">
+                    <h2>Gmail</h2>
+                    <button id="refresh-gmail" class="btn btn-small">更新</button>
+                </div>
+                <div id="gmail-content" class="content-area">
+                    <p>Loading emails...</p>
+                </div>
+            </section>
+
+            <!-- Google drive section -->
+             <section id="drive-section" class="api-section">
+                <div class="section-header">
+                    <h2>Google drive</h2>
+                    <button id="refresh-drive" class="btn btn-small">Update</button>
+                </div>
+                <div id="drive-content" class="content-area">
+                    <p>Loading files...</p>
+                </div>
+             </section>
+
+             <!-- Google calendar section -->
+              <section id="calendar-section" class="api-section">
+                
+              </section>
+        </div>
+    </main>
+    
+</body>
+</html>
