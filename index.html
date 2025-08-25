@@ -40,7 +40,7 @@
             <section id="gmail-section" class="api-section">
                 <div class="section-header">
                     <h2>Gmail</h2>
-                    <button id="refresh-gmail" class="btn btn-small">更新</button>
+                    <button id="refresh-gmail" class="btn btn-small">Refresh</button>
                 </div>
                 <div id="gmail-content" class="content-area">
                     <p>Loading emails...</p>
@@ -60,10 +60,58 @@
 
              <!-- Google calendar section -->
               <section id="calendar-section" class="api-section">
-                
+                <div class="section-header">
+                    <h2>📅 Google Calendar</h2>
+                    <button id="refresh-calendar" class="btn btn-small">Refresh</button>
+                </div>
+                <div id="calendar-content" class="content-area">
+                    <p>Loading events...</p>
+                </div>
               </section>
+
+              <!-- Youtube section -->
+               <section id="youtube-section" class="api-section">
+                <div class="section-header">
+                    <h2>🎥 YouTube</h2>
+                </div>
+                <div id="youtube-content" class="content-area">
+                    <div class="search-box">
+                        <input type="text" id="youtube-search" placeholder="Search videos..." />
+                        <button id="youtube-search-btn" class="btn btn-primary">Search</button>
+                    </div>
+                    <div id="youtube-results"></div>
+                </div>
+            </section>
+
+            <!-- Google map section -->
+             <section id="maps-section" class="api-section">
+                <div class="section-header">
+                    <h2>🗺️ Google Maps</h2>
+                </div>
+                <div id="maps-content" class="content-area">
+                    <div class="search-box">
+                        <input type="text" id="maps-search" placeholder="Search location..." />
+                        <button id="maps-search-btn" class="btn btn-primary">Search</button>
+                    </div>
+                    <div id="map" class="map-container"></div>
+                </div>
+            </section>
+        </div>
+        <div id="error-message" class="error" style="display:none;">
+            <h3>⚠️ An error occurred</h3>
+            <p id="error-text"></p>
         </div>
     </main>
-    
+
+
+    <!-- Config (API keys) -->
+    <script src="config.js"></script>
+    <!-- Main scripts -->
+    <script src="script.js"></script>
+    <script src="components/gmail.js"></script>
+    <script src="components/drive.js"></script>
+    <script src="components/calendar.js"></script>
+    <script src="components/maps.js"></script>
+    <script src="components/youtube.js"></script>
 </body>
 </html>
