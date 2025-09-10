@@ -128,5 +128,115 @@ function getFileIcon(mineType) {
 }
 
 function getFileType(mineType) {
-    
+    if (!mimeType) return 'File';
+
+    const typeMap = {
+        'application/vnd.google-apps.document': 'Google Docs',
+        'application/vnd.google-apps.spreadsheet': 'Google Sheets',
+        'application/vnd.google-apps.presentation': 'Google Slides',
+        'application/vnd.google-apps.folder': 'Folder',
+        'application/pdf': 'PDF',
+        'image/jpeg': 'Image (JPEG)',
+        'image/png': 'Image (PNG)',
+        'image/gif': 'Image (GIF)',
+        'video/mp4': 'Video (MP4)',
+        'video/quicktime': 'Video',
+        'audio/mpeg': 'Audio (MP3)',
+        'audio/wav': 'Audio (WAV)',
+        'text/plain': 'Text',
+        'application/zip': 'ZIP File',
+        'application/vnd.ms-excel': 'Excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'Excel',
+        'application/msword': 'Word',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'Word'
+    };
+
+    return typeMap[mineType] || 'File';
 }
+
+function openFile(webViewLink, fileName) {
+    console.log('Opening file:', fileName);
+
+    if (webViewLink) {
+        window.open(webViewLink, '_blank');
+    } else {
+        alert('This file cannot be opened');
+    }
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// File search function
+async function searchDriveFiles(query) {
+    const driveContent = document.getElementById('drive-content');
+    if (!driveContent) return;
+
+    try {
+        console.log('Searching Drive for:', query);
+        driveContent.innerHTML = '<p>Searching for files...</p>';
+
+        const response = await gapi.client.drive.files.list({
+            q: `name contains '${query}'`,
+            pageSize: 20,
+            fields: 'files(id, name, mineType, size, modifiedTime, webViewLink, iconLink)',
+            orderBy: 'modifiedTime desc'
+        });
+
+        const files = response.result.files;
+
+        if (!files || files.length === 0) {
+            driveContent.inerHTML  = `No files matching ‘${query}’ were found.`;
+            return;
+        }
+
+        const filesHTML = files.map(file => {
+            const fileName = file.name || 'File name unknown';
+            const fileSize = formatFileSize(file.size);
+            const modifiedTime = formatDate(file,modifiedTime);
+            const fileIcon = getFileIcon(file.mineType);
+            const fileType = getFileType(file.mineType);
+
+            return `
+                <div class="file-item" onclick="openFile('${file.webViewLink}', '${escapeHtml(fileName)}')">
+                    <div class="file-icon">${fileIcon}</div>
+                    <div class="file-info">
+                        <div class="file-name">${escapeHtml(fileName)}</div>
+                        <div class="file-meta">
+                            <span class="file-type">${fileType}</span>
+                            ${fileSize ? ` • ${fileSize}` : ''}
+                            <span class="file-date"> • ${modifiedTime}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        driveContent.innerHTML = `
+            <div class="file-list">
+                <div class="section-info">
+                    <span>Search results for ${query} (${files.length}Result)</span>
+                </div>
+                &{innerHTML}
+            </div>
+        `;
+
+        console.log('Drive search completed successfully');
+
+    } catch (error) {
+        console.error('Drive search error:', error);
+        driveContent.innerHTML = `
+            <div class="error-message">
+                <p>File search failed</p>
+                <p class="error-details">${error.message}</p>
+            </div>
+        `;
+    }
+}
+
+console.log('Drive component loaded');
