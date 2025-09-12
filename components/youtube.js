@@ -1,5 +1,5 @@
 async function searchYouTube(query) {
-    const youtubeResults = document.getElementById('youtube-result');
+    const youtubeResults = document.getElementById('youtube-results');
     if (!youtubeResults) return;
 
     try {
@@ -93,7 +93,7 @@ function escapeHtml(text) {
 
 // Function to retrieve popular videos (optional)
 async function loadTrendingVideos() {
-    const youtubeResults = document.getElementById('youtube-result');
+    const youtubeResults = document.getElementById('youtube-results');
     if (!youtubeResults) return;
 
     try {

@@ -1,4 +1,3 @@
-let gapi = null;
 let currentUser = null;
 let accessToken = null;
 
@@ -20,7 +19,7 @@ const elements = {
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing...');
     initializeElements();
-    loadGoogleAPI();
+    // The gapi.load call will handle the API loading.
 });
 
 function initializeElements() {
@@ -51,7 +50,7 @@ function initializeElements() {
         });
     }
 
-    const refreshDrive = documenet.getElementById('refresh-drive');
+    const refreshDrive = document.getElementById('refresh-drive');
     if (refreshDrive) {
         refreshDrive.addEventListener('click', () => {
             if (typeof loadDriveData === 'function') loadDriveData();
@@ -79,36 +78,12 @@ function initializeElements() {
     }
 }
 
-async function loadGoogleAPI() {
+function handleClientLoad() {
+    gapi.load('client:auth2', initClient);
+}
+
+async function initClient() {
     try {
-        console.log('Loading Google API...');
-
-        // Waiting for the Google API Client Library to load
-        await new Promise((resolve) => {
-            if (typeof gapi !== 'undefined') {
-                resolve();
-                return;
-            }
-
-            const checkGapi = setInterval(() => {
-                if (typeof gapi !== 'underfined') {
-                    clearInterval(checkGapi);
-                    resolve();
-                }
-            }, 100);
-
-            // Timeout in 10 seconds
-            setTimeout(() => {
-                clearInterval(checkGapi);
-                throw new Error('Google API loading timeout');
-            }, 10000);
-        });
-
-        // GAPI initialisation
-        await new Promise((resolve) => {
-            gapi.load('auth2:client', resolve);
-        });
-
         console.log('Initializing GAPI client...');
         await gapi.client.init({
             apiKey: CONFIG.GOOGLE_API_KEY,
@@ -142,7 +117,7 @@ async function loadGoogleAPI() {
 async function handleSignIn() {
     try {
         console.log('Starting sign in...');
-        showLoading(ture);
+        showLoading(true);
 
         const authInstance = gapi.auth2.getAuthInstance();
         const user = await authInstance.signIn();
@@ -162,7 +137,7 @@ function handleAuthSuccess(user) {
     accessToken = user.getAuthResponse().access_token;
 
     // Update UI
-    const profile = user.getBascProfile();
+    const profile = user.getBasicProfile();
     if (elements.userName) {
         elements.userName.textContent = profile.getName();
     }

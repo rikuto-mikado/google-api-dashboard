@@ -83,3 +83,79 @@ async function loadCalendarData() {
         `;
     }
 }
+
+// Function to group events by date
+function groupEventsByDate(events) {
+    const grouped = {};
+    
+    events.forEach(event => {
+        const startTime = event.start?.dateTime || event.start?.date;
+        if (!startTime) return;
+        
+        const date = new Date(startTime).toDateString();
+        if (!grouped[date]) {
+            grouped[date] = [];
+        }
+        grouped[date].push(event);
+    });
+    
+    return grouped;
+}
+
+// Function to format the date name
+function formatDayName(dateString) {
+    const date = new Date(dateString);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    
+    if (date.toDateString() === today.toDateString()) {
+        return 'Today';
+    } else if (date.toDateString() === tomorrow.toDateString()) {
+        return 'Tomorrow';
+    } else {
+        return date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+    }
+}
+
+// Function to format the event time
+function formatEventTime(event) {
+    const startTime = event.start?.dateTime || event.start?.date;
+    const endTime = event.end?.dateTime || event.end?.date;
+    
+    if (!startTime) return '';
+    
+    if (event.start?.date) {
+        // All-day event
+        return 'All day';
+    }
+    
+    const start = new Date(startTime);
+    const end = new Date(endTime);
+    
+    const formatTime = (date) => {
+        return date.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: false
+        });
+    };
+    
+    return `${formatTime(start)} - ${formatTime(end)}`;
+}
+
+// HTML escape function
+function escapeHtml(text) {
+    if (!text) return '';
+    
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Function to open an event
+function openEvent(eventId, title) {
+    console.log('Opening event:', title);
+    // A location where the event details display function can be implemented in the future
+    alert(`Event details feature will be implemented in the future.\nEvent: ${title}`);
+}
