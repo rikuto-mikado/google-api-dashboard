@@ -1,6 +1,6 @@
 async function loadDriveData() {
     const driveContent = document.getElementById('drive-content');
-    if (!driveCotent) return;
+    if (!driveContent) return;
 
     try {
         console.log('Loading Drive data...');
@@ -9,7 +9,7 @@ async function loadDriveData() {
         // Retrieve a file list using the Google Drive API
         const response = await gapi.client.drive.files.list({
             pageSize: 10,
-            fields: 'files(id, name, mineType, size, modifiedTime, webViewLink, iconLink)',
+            fields: 'files(id, name, mimeType, size, modifiedTime, webViewLink, iconLink)',
             orderBy: 'modifiedTime desc'
         });
 
@@ -27,11 +27,11 @@ async function loadDriveData() {
             const fileName = file.name || 'File name unknown';
             const fileSize = formatFileSize(file.size);
             const modifiedTime = formatDate(file.modifiedTime);
-            const fileIcon = getFileIcon(file.mineType);
-            const fileType = getFileType(file.mineType);
+            const fileIcon = getFileIcon(file.mimeType);
+            const fileType = getFileType(file.mimeType);
 
             return `
-                <div class="file-item" onclick="openFile('${file.webViewLink}', '${escapeHtml(fileName)}')")>
+                <div class="file-item" onclick="openFile('${file.webViewLink}', '${escapeHtml(fileName)}')">
                     <div class="file-icon">${fileIcon}</div>
                     <div class="file-info">
                         <div class="file-name">${escapeHtml(fileName)}</div>
@@ -100,8 +100,8 @@ function formatDate(dateString) {
     }
 }
 
-function getFileIcon(mineType) {
-    if (!mineType) return '📄';
+function getFileIcon(mimeType) {
+    if (!mimeType) return '📄';
 
     const iconMap = {
         'application/vnd.google-apps.document': '📝',
@@ -124,10 +124,10 @@ function getFileIcon(mineType) {
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document': '📝'
     };
 
-    return iconMap[mineType] || '📄';
+    return iconMap[mimeType] || '📄';
 }
 
-function getFileType(mineType) {
+function getFileType(mimeType) {
     if (!mimeType) return 'File';
 
     const typeMap = {
@@ -151,7 +151,7 @@ function getFileType(mineType) {
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'Word'
     };
 
-    return typeMap[mineType] || 'File';
+    return typeMap[mimeType] || 'File';
 }
 
 function openFile(webViewLink, fileName) {
@@ -184,23 +184,23 @@ async function searchDriveFiles(query) {
         const response = await gapi.client.drive.files.list({
             q: `name contains '${query}'`,
             pageSize: 20,
-            fields: 'files(id, name, mineType, size, modifiedTime, webViewLink, iconLink)',
+            fields: 'files(id, name, mimeType, size, modifiedTime, webViewLink, iconLink)',
             orderBy: 'modifiedTime desc'
         });
 
         const files = response.result.files;
 
         if (!files || files.length === 0) {
-            driveContent.inerHTML  = `No files matching ‘${query}’ were found.`;
+            driveContent.innerHTML  = `No files matching ‘${query}’ were found.`;
             return;
         }
 
         const filesHTML = files.map(file => {
             const fileName = file.name || 'File name unknown';
             const fileSize = formatFileSize(file.size);
-            const modifiedTime = formatDate(file,modifiedTime);
-            const fileIcon = getFileIcon(file.mineType);
-            const fileType = getFileType(file.mineType);
+            const modifiedTime = formatDate(file.modifiedTime);
+            const fileIcon = getFileIcon(file.mimeType);
+            const fileType = getFileType(file.mimeType);
 
             return `
                 <div class="file-item" onclick="openFile('${file.webViewLink}', '${escapeHtml(fileName)}')">
@@ -220,9 +220,9 @@ async function searchDriveFiles(query) {
         driveContent.innerHTML = `
             <div class="file-list">
                 <div class="section-info">
-                    <span>Search results for ${query} (${files.length}Result)</span>
+                    <span>Search results for ${query} (${files.length} Results)</span>
                 </div>
-                &{innerHTML}
+                ${filesHTML}
             </div>
         `;
 

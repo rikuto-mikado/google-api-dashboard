@@ -40,7 +40,7 @@ function initializeElements() {
         elements.signinButton.addEventListener('click', handleSignIn);
     }
     if (elements.signoutButton) {
-        element.signoutButton.addEventListener('click', handleSignOut);
+        elements.signoutButton.addEventListener('click', handleSignOut);
     }
 
     // Refresh button

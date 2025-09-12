@@ -7,13 +7,13 @@ async function loadGmailData() {
       gmailContent.innerHTML = '<p>Loading email...</p>';
 
       // Retrieve the message list using the Gmail API
-      const response = await GamepadHapticActuator.client.gmail.users.messages.list({
+      const response = await gapi.client.gmail.users.messages.list({
         userId: 'me',
         maxResults: 10,
         q: ''
       });
 
-      const message = response.result.messages;
+      const messages = response.result.messages;
 
       if (!messages || messages.length === 0) {
         gmailContent.innerHTML = '<p>The email could not be found</p>';
@@ -25,7 +25,7 @@ async function loadGmailData() {
       // Retrieve details for each message (first five entries)
       const emailPromises = messages.slice(0, 5).map(async (message) => {
         try {
-          const details = await GamepadHapticActuator.client.gmail.users.messages.get({
+          const details = await gapi.client.gmail.users.messages.get({
             userId: 'me',
             id: message.id,
             format: 'metadata',
@@ -33,12 +33,12 @@ async function loadGmailData() {
           });
           return details.result;
         } catch (error) {
-          console.error('Error fethcing message:', error);
+          console.error('Error fetching message:', error);
           return null;
         }
       });
 
-      const emailDetails = await Primise.all(emailPromises);
+      const emailDetails = await Promise.all(emailPromises);
       const validEmails = emailDetails.filter(email => email !== null);
 
       if (validEmails.length === 0) {
@@ -69,7 +69,7 @@ async function loadGmailData() {
       gmailContent.innerHTML = `
       <div class="email-list">
         <div class="section-info">
-          <span> Latest email (${validEmails.length}case)</span>
+          <span> Latest email (${validEmails.length} cases)</span>
         </div>
         ${emailsHTML}
       </div>
@@ -99,7 +99,7 @@ function formatDate(dateString) {
   try {
     const date = new Date(dateString);
     return date.toLocaleDateString('ja-JP') + ' ' + date.toLocaleTimeString('ja-JP');
-  } catch (errror) {
+  } catch (error) {
     return dateString;
   }
 }
@@ -109,7 +109,7 @@ function escapeHtml(text) {
 
   const div = document.createElement('div');
   div.textContent = text;
-  return div.innnerHTML;
+  return div.innerHTML;
 }
 
 function openEmail(messageId) {

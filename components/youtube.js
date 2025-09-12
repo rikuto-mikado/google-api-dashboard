@@ -7,7 +7,7 @@ async function searchYouTube(query) {
         youtubeResults.innerHTML = '<p>Searching for videos...</p>';
 
         // Search using the YouTube Data API v3
-        const response = await GamepadHapticActuator.client.youtube.search.list({
+        const response = await gapi.client.youtube.search.list({
             part: 'snippet',
             q: query,
             maxResults: 8,
@@ -17,7 +17,7 @@ async function searchYouTube(query) {
 
         const videos = response.result.items;
 
-        if (!videos || videos.lenth === 0) {
+        if (!videos || videos.length === 0) {
             youtubeResults.innerHTML = '<p>No search results were found</p>';
             return;
         }
@@ -93,7 +93,7 @@ function escapeHtml(text) {
 
 // Function to retrieve popular videos (optional)
 async function loadTrendingVideos() {
-    const youtubeResults = document.getElementById('youtube-results');
+    const youtubeResults = document.getElementById('youtube-result');
     if (!youtubeResults) return;
 
     try {
@@ -161,10 +161,8 @@ function formatViewCount(count) {
     if (!count) return '0';
     
     const num = parseInt(count);
-    if (num >= 100000000) {
-        return (num / 100000000).toFixed(1) + 'B';
-    } else if (num >= 10000) {
-        return (num / 10000).toFixed(1) + 'M';
+    if (num >= 1000000) {
+        return (num / 1000000).toFixed(1) + 'M';
     } else if (num >= 1000) {
         return (num / 1000).toFixed(1) + 'K';
     }
