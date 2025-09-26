@@ -1,50 +1,16 @@
-# Google API Dashboard
+# React + Vite
 
-A web dashboard that integrates with multiple Google APIs to display and manage your Google services data.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- **Gmail**: View your recent emails
-- **Google Drive**: Browse your files and folders
-- **Google Calendar**: Display upcoming events
-- **YouTube**: Search for videos
-- **Google Maps**: Search locations and display maps
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Setup
+## React Compiler
 
-1. Clone the repository
-2. Copy `config.example.js` to `config.js` and update with your API credentials
-3. Open `index.html` in a web browser
+The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Configuration
+## Expanding the ESLint configuration
 
-You'll need to set up Google API credentials:
-
-1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select an existing one
-3. Enable the required APIs:
-   - Gmail API
-   - Google Drive API
-   - Google Calendar API
-   - YouTube Data API v3
-   - Google Maps JavaScript API
-4. Create credentials (OAuth 2.0 Client ID and API Key)
-5. Update `config.js` with your credentials
-
-## File Structure
-
-- `index.html` - Main HTML file
-- `script.js` - Core JavaScript functionality
-- `style.css` - Styling
-- `config.js` - API configuration (not included in repo)
-- `config.example.js` - Example configuration file
-- `components/` - Individual API component files
-  - `gmail.js` - Gmail integration
-  - `drive.js` - Google Drive integration
-  - `calendar.js` - Google Calendar integration
-  - `youtube.js` - YouTube integration
-  - `maps.js` - Google Maps integration
-
-## License
-
-MIT
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
