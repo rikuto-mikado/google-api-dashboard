@@ -45,13 +45,6 @@ You'll need to set up Google API credentials:
   - `youtube.js` - YouTube integration
   - `maps.js` - Google Maps integration
 
-## Usage
-
-1. Open the dashboard in your browser
-2. Click "Login with Google" to authenticate
-3. Grant permissions for the required Google services
-4. Use the dashboard to interact with your Google data
-
 ## License
 
-ISC
+MIT
