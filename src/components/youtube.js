@@ -1,3 +1,6 @@
+/* global gapi */
+
+/* eslint-disable-next-line no-unused-vars */
 async function searchYouTube(query) {
     const youtubeResults = document.getElementById('youtube-results');
     if (!youtubeResults) return;
@@ -71,11 +74,12 @@ function formatVideoDate(dateString) {
     try {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US');
-    } catch (error) {
+    } catch {
         return dateString;
     }
 }
 
+/* eslint-disable-next-line no-unused-vars */
 function playVideo(videoId) {
     console.log('Playing video:', videoId);
     // Open the YouTube video page in a new tab
@@ -92,6 +96,7 @@ function escapeHtml(text) {
 }
 
 // Function to retrieve popular videos (optional)
+/* eslint-disable-next-line no-unused-vars */
 async function loadTrendingVideos() {
     const youtubeResults = document.getElementById('youtube-results');
     if (!youtubeResults) return;

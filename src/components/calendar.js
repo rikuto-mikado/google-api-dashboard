@@ -1,3 +1,6 @@
+/* global gapi */
+
+/* eslint-disable-next-line no-unused-vars */
 async function loadCalendarData() {
     const calendarContent = document.getElementById('calendar-content');
     if (!calendarContent) return;
@@ -154,8 +157,9 @@ function escapeHtml(text) {
 }
 
 // Function to open an event
+/* eslint-disable-next-line no-unused-vars */
 function openEvent(eventId, title) {
-    console.log('Opening event:', title);
+    console.log('Opening event:', eventId, title);
     // A location where the event details display function can be implemented in the future
     alert(`Event details feature will be implemented in the future.\nEvent: ${title}`);
 }

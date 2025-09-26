@@ -1,3 +1,6 @@
+/* global gapi */
+
+/* eslint-disable-next-line no-unused-vars */
 async function loadDriveData() {
     const driveContent = document.getElementById('drive-content');
     if (!driveContent) return;
@@ -95,7 +98,7 @@ function formatDate(dateString) {
         } else {
             return date.toLocaleDateString('ja-Jp');
         }
-    } catch (error) {
+    } catch {
         return dateString;
     }
 }
@@ -154,6 +157,7 @@ function getFileType(mimeType) {
     return typeMap[mimeType] || 'File';
 }
 
+/* eslint-disable-next-line no-unused-vars */
 function openFile(webViewLink, fileName) {
     console.log('Opening file:', fileName);
 
@@ -173,6 +177,7 @@ function escapeHtml(text) {
 }
 
 // File search function
+/* eslint-disable-next-line no-unused-vars */
 async function searchDriveFiles(query) {
     const driveContent = document.getElementById('drive-content');
     if (!driveContent) return;

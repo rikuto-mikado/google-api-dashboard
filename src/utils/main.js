@@ -1,4 +1,6 @@
-let currentUser = null;
+/* global gapi, CONFIG, loadGmailData, loadDriveData, loadCalendarData, searchYouTube */
+
+let currentUser = null; // eslint-disable-line no-unused-vars
 let accessToken = null;
 
 // DOM elements
@@ -288,6 +290,7 @@ function getAuthHeaders() {
     };
 }
 
+/* eslint-disable-next-line no-unused-vars */
 async function makeAPIRequest(url, options = {}) {
     try {
         const response = await fetch(url, {
