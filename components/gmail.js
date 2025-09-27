@@ -1,6 +1,3 @@
-/* global gapi */
-
-/* eslint-disable-next-line no-unused-vars */
 async function loadGmailData() {
     const gmailContent = document.getElementById('gmail-content');
     if (!gmailContent) return;
@@ -102,7 +99,7 @@ function formatDate(dateString) {
   try {
     const date = new Date(dateString);
     return date.toLocaleDateString('ja-JP') + ' ' + date.toLocaleTimeString('ja-JP');
-  } catch {
+  } catch (error) {
     return dateString;
   }
 }
@@ -115,7 +112,6 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-/* eslint-disable-next-line no-unused-vars */
 function openEmail(messageId) {
   console.log('Opening email:', messageId);
   // A location where the email details display function can be implemented in the future

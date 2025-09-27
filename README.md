@@ -1,16 +1,55 @@
-# React + Vite
+# Google API Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple dashboard that uses the Google API to display data from various Google services.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Login with your Google account
+- View your latest emails from Gmail
+- View your recent files from Google Drive
+- View your upcoming events from Google Calendar
+- Search for videos on YouTube
+- Search for locations on Google Maps
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/your-username/google-api-dashboard.git
+    cd google-api-dashboard
+    ```
 
-## Expanding the ESLint configuration
+2.  **Create a `config.js` file**
+    Copy `config.example.js` to `config.js`.
+    ```bash
+    cp config.example.js config.js
+    ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+3.  **Get your Google API Key and Client ID**
+    - Go to the [Google Cloud Console](https://console.cloud.google.com/).
+    - Create a new project.
+    - Enable the following APIs:
+        - Gmail API
+        - Google Drive API
+        - Google Calendar API
+        - YouTube Data API v3
+        - Maps JavaScript API
+    - Create credentials:
+        - **API Key**: Restrict it to your domain.
+        - **OAuth 2.0 Client ID**:
+            - Application type: Web application
+            - Authorized JavaScript origins: `http://localhost` and your domain
+            - Authorized redirect URIs: `http://localhost` and your domain
+
+4.  **Update `config.js`**
+    Open `config.js` and replace the placeholder values with your API Key and Client ID.
+
+5.  **Run the application**
+    Open the `index.html` file in your web browser.
+
+## Usage
+
+- Click the "Login with Google" button to authenticate.
+- Once logged in, the dashboard will display data from the various Google services.
+- Use the refresh buttons to update the data for each service.
+- Use the search boxes to search on YouTube and Google Maps.
